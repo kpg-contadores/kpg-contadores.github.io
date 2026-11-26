@@ -9,14 +9,12 @@
 <link rel="icon" href="assets/kpg-app-icon.svg" type="image/svg+xml">
 <link rel="icon" href="assets/favicon-32.png" type="image/png" sizes="32x32">
 <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
-<!-- Vista previa al compartir (WhatsApp, Instagram, LinkedIn).
-     Cuando exista el dominio, cambie "assets/og-kpg.png" por la dirección completa,
-     por ejemplo https://su-dominio.cl/assets/og-kpg.png, y agregue og:url. -->
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="KPG y Asesores SpA">
 <meta property="og:locale" content="es_CL">
 <meta property="og:title" content="KpG · Detrás de cada respuesta, un contador">
 <meta property="og:description" content="Trato directo, respuestas claras y su contabilidad al día.">
+<meta property="og:url" content="https://kpg-contadores.github.io/">
 <meta property="og:image" content="https://kpg-contadores.github.io/assets/og-kpg.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -38,270 +36,425 @@
   src: url(assets/fuentes/source-serif-4-latin-ext-wght-normal.woff2) format("woff2");
   unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF; }
 
+/* KpG · página de enlaces. Primero celular; en computador, dos columnas. */
 :root {
-  --azul: #0E2A47;
-  --azul-claro: #1A4167;
-  --dorado: #C9AC78;
-  --dorado-texto: #85662F;
-  --papel: #F6F4EF;
-  --papel-hondo: #ECE7DC;
-  --tinta: #1C2A37;
-  --suave: #56626E;
-  --linea: #E4DED2;
-  --blanco: #FFFFFF;
-  --radio: 16px;
+  --azul: #0E2A47; --azul-2: #143657; --azul-3: #1D4A72;
+  --verde: #1E7A62; --verde-texto: #186650; --verde-suave: #E6F3EE; --verde-claro: #CDE8DD;
+  --dorado: #C9A96B; --dorado-claro: #DCC292; --dorado-texto: #876631;
+  --fondo: #F4F6F9; --blanco: #FFFFFF; --tinta: #17263A; --suave: #566273; --linea: #E1E6EE; --sobre-azul: #C2CEDB;
+  --radio: 18px; --radio-chico: 12px;
+  --sombra: 0 1px 2px rgba(14,42,71,.06), 0 12px 32px -18px rgba(14,42,71,.28);
+  --sombra-alta: 0 2px 4px rgba(14,42,71,.06), 0 30px 60px -28px rgba(14,42,71,.40);
   --serif: "Source Serif 4", Georgia, "Times New Roman", serif;
   --sans: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
 }
 *, *::before, *::after { box-sizing: border-box; }
-html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
-body {
-  margin: 0;
-  background: var(--papel);
-  color: var(--tinta);
-  font: 400 16px/1.55 var(--sans);
-  -webkit-font-smoothing: antialiased;
-  text-rendering: optimizeLegibility;
-}
+[hidden] { display: none !important; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--blanco); color: var(--tinta); font: 400 16px/1.6 var(--sans); -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; overflow-x: clip; }
 a { color: inherit; }
-a:focus-visible { outline: 2px solid var(--dorado); outline-offset: 3px; border-radius: 12px; }
-svg { display: block; }
+a:focus-visible { outline: 3px solid var(--dorado); outline-offset: 3px; border-radius: 14px; }
+svg { display: block; flex: none; }
+img { max-width: 100%; }
+p, h1, h2, ul, ol { margin: 0; }
+ul, ol { padding: 0; list-style: none; }
+.saltar { position: absolute; left: 12px; top: -60px; z-index: 50; background: var(--azul); color: #fff; padding: 10px 14px; border-radius: 10px; text-decoration: none; }
+.saltar:focus { top: 12px; }
 
-.pagina { max-width: 460px; margin: 0 auto; background: var(--papel); min-height: 100vh; min-height: 100dvh; }
+/* ---------- Piezas comunes ---------- */
+.kicker { font-size: 12px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--dorado-claro); }
+.kicker.oscuro { color: var(--dorado-texto); }
+.raya-doble { display: block; width: 64px; height: 7px; margin-top: 14px; border-top: 2px solid var(--dorado); border-bottom: 2px solid var(--dorado); }
+.raya-doble.clara { border-color: var(--dorado-claro); }
+h2 { font-family: var(--serif); font-weight: 600; font-size: clamp(27px, 4.6vw, 34px); line-height: 1.15; letter-spacing: -.01em; color: var(--azul); margin-top: 8px; }
+.intro { margin-top: 16px; color: var(--suave); font-size: 16px; max-width: 40ch; }
+.icono-caja { width: 46px; height: 46px; border-radius: 13px; display: grid; place-items: center; background: var(--verde-suave); color: var(--verde-texto); }
+.icono-caja svg { width: 23px; height: 23px; }
+.icono-caja.claro { background: rgba(255,255,255,.1); color: var(--dorado-claro); }
 
-/* Portada: cordillera de la marca. Para usar una foto, guárdela como assets/portada.jpg
-   y quite los dos "/*" de la línea "background-image" que la incluye, más abajo. */
-.portada {
-  height: 172px;
-  background-color: var(--azul);
-  background-image: url(assets/cordillera.svg);
-  /* background-image: linear-gradient(rgba(14,42,71,.35), rgba(14,42,71,.35)), url(assets/portada.jpg); */
-  background-size: cover;
-  background-position: center bottom;
+/* ---------- Portada / columna lateral ---------- */
+.lateral {
+  position: relative; color: #fff; overflow: hidden;
+  background: var(--azul) url(assets/cordillera.svg) center bottom / 100% auto no-repeat;
+  padding: 26px 22px 120px;
 }
-.identidad { text-align: center; padding: 0 24px; }
-.avatar {
-  width: 116px; height: 116px; margin: -58px auto 0; position: relative;
-  border-radius: 50%; border: 5px solid var(--papel); background: var(--azul);
+.lateral::before { content: ""; position: absolute; inset: 0; background: radial-gradient(120% 70% at 85% 0%, rgba(30,122,98,.35), transparent 60%); pointer-events: none; }
+.lateral-contenido { position: relative; max-width: 520px; margin: 0 auto; }
+.identidad { display: flex; align-items: center; gap: 14px; }
+.avatar { width: 64px; height: 64px; border-radius: 50%; border: 3px solid rgba(255,255,255,.9); background: var(--azul); flex: none; }
+.nombre { font-weight: 650; font-size: 16.5px; color: #fff; }
+.usuario { font-size: 14px; color: var(--sobre-azul); }
+.lateral .kicker { display: block; margin-top: 30px; }
+h1 { font-family: var(--serif); font-weight: 600; font-size: clamp(38px, 10vw, 58px); line-height: 1.05; letter-spacing: -.015em; margin-top: 10px; color: #fff; }
+h1 em { font-style: italic; color: var(--dorado-claro); }
+.lateral .raya-doble { border-color: var(--dorado-claro); margin-top: 18px; }
+.bajada { margin-top: 16px; font-size: 18px; color: var(--sobre-azul); max-width: 34ch; }
+.bajada strong { color: #fff; font-weight: 600; }
+
+.acciones { display: grid; gap: 12px; margin-top: 26px; }
+.accion {
+  display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 14px;
+  padding: 15px 18px; border-radius: 16px; text-decoration: none; min-height: 72px;
+  transition: transform .2s, box-shadow .2s, background .2s, border-color .2s;
 }
-.avatar img { width: 100%; height: 100%; border-radius: 50%; display: block; }
-.nombre { margin: 14px 0 0; font-weight: 600; font-size: 17px; letter-spacing: -.005em; color: var(--azul); }
-.usuario { margin: 2px 0 0; font-size: 14px; color: var(--suave); }
-.usuario a { text-decoration: none; font-weight: 500; }
-.rubro { margin: 2px 0 0; font-size: 14px; color: var(--suave); }
-.usuario a:hover { color: var(--azul); }
+.accion:hover { transform: translateY(-2px); }
+.accion-icono { width: 44px; height: 44px; border-radius: 12px; display: grid; place-items: center; }
+.accion-icono svg { width: 24px; height: 24px; }
+.accion-texto b { display: block; font-size: 17px; font-weight: 650; line-height: 1.25; }
+.accion-texto small { display: block; font-size: 14px; margin-top: 2px; }
+.accion > svg:last-child { width: 20px; height: 20px; }
+.accion-whatsapp { background: var(--verde); color: #fff; box-shadow: 0 14px 30px -16px rgba(30,122,98,.9); }
+.accion-whatsapp:hover { background: #22876c; }
+.accion-whatsapp .accion-icono { background: rgba(255,255,255,.16); }
+.accion-whatsapp small { color: var(--verde-claro); }
+.accion-sitio { background: rgba(255,255,255,.07); color: #fff; border: 1.5px solid var(--dorado); }
+.accion-sitio:hover { background: rgba(255,255,255,.12); border-color: var(--dorado-claro); }
+.accion-sitio .accion-icono { background: rgba(201,169,107,.18); color: var(--dorado-claro); }
+.accion-sitio small { color: var(--sobre-azul); }
 
-.titular { padding: 30px 26px 4px; text-align: center; }
-.titular h1 {
-  margin: 0; font-family: var(--serif); font-weight: 600; color: var(--azul);
-  font-size: 34px; line-height: 1.08; letter-spacing: -.015em;
-  font-variation-settings: "opsz" 60;
+.sellos { display: flex; flex-wrap: wrap; gap: 8px 16px; margin-top: 24px; font-size: 13.5px; color: var(--sobre-azul); }
+.sellos li { display: inline-flex; align-items: center; gap: 6px; }
+.sellos svg { width: 16px; height: 16px; color: var(--verde-brillo, #4FB394); }
+
+/* ---------- Bloques de contenido ---------- */
+.bloque { padding: 52px 22px; }
+.bloque > * { max-width: 640px; margin-left: auto; margin-right: auto; }
+.bloque > .kicker, .bloque > h2, .bloque > .raya-doble, .bloque > .intro { margin-left: auto; margin-right: auto; }
+.bloque > .raya-doble { margin-left: max(0px, calc((100% - 640px) / 2)); }
+.fondo-gris { background: var(--fondo); }
+.fondo-azul { background: linear-gradient(160deg, var(--azul) 0%, var(--azul-2) 70%, #17405f 100%); color: #fff; }
+.fondo-azul h2 { color: #fff; }
+.fondo-azul .intro { color: var(--sobre-azul); }
+.fondo-azul .raya-doble { border-color: var(--dorado-claro); }
+
+/* Su mes tributario */
+.calendario { margin-top: 24px; background: var(--blanco); border: 1px solid var(--linea); border-radius: 20px; padding: 18px; box-shadow: var(--sombra-alta); }
+.cal-cab { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+.cal-cab b { font-family: var(--serif); font-size: 19px; color: var(--azul); }
+.uf { font-size: 13.5px; color: var(--suave); }
+.uf strong { color: var(--azul); font-weight: 650; }
+.cal-linea { margin-top: 12px; display: grid; grid-template-columns: 58px 1fr; gap: 6px 14px; align-items: center; padding: 12px; border-radius: 14px; background: var(--fondo); }
+.fecha { grid-row: span 2; width: 58px; height: 58px; border-radius: 14px; background: var(--azul); color: #fff; display: grid; place-content: center; text-align: center; line-height: 1; box-shadow: inset 0 -3px 0 var(--dorado); }
+.fecha b { font-family: var(--serif); font-size: 24px; font-weight: 700; }
+.fecha small { font-size: 11px; text-transform: uppercase; letter-spacing: .08em; color: var(--sobre-azul); margin-top: 3px; }
+.cal-texto b { display: block; font-size: 15.5px; color: var(--azul); }
+.cal-texto span { display: block; font-size: 13.5px; color: var(--suave); }
+.faltan { justify-self: start; font-size: 12.5px; font-weight: 650; padding: 3px 10px; border-radius: 999px; background: var(--verde-suave); color: var(--verde-texto); }
+.faltan.urgente { background: #FDF0E1; color: #9A5B12; }
+.cal-nota { margin-top: 14px; font-size: 13.5px; color: var(--suave); }
+.enlace { display: inline-block; margin-top: 12px; font-weight: 650; font-size: 15px; color: var(--verde-texto); text-decoration: underline; text-decoration-color: var(--verde-claro); text-underline-offset: 4px; }
+.enlace svg { display: inline-block; width: 16px; height: 16px; vertical-align: -3px; margin-left: 4px; }
+
+/* ¿En qué le ayudamos? */
+.temas { margin-top: 24px; display: grid; gap: 12px; }
+.tema {
+  display: grid; grid-template-columns: auto 1fr; gap: 6px 14px; align-items: start;
+  padding: 16px; border: 1px solid var(--linea); border-radius: 16px; background: var(--blanco);
+  text-decoration: none; box-shadow: var(--sombra); transition: transform .2s, border-color .2s, box-shadow .2s;
 }
-.raya { width: 64px; height: 9px; margin: 18px auto 0; border-top: 2px solid var(--dorado); border-bottom: 2px solid var(--dorado); }
-.titular p { margin: 18px auto 0; max-width: 33ch; color: var(--suave); font-size: 16px; text-wrap: pretty; }
-.titular strong { color: var(--tinta); font-weight: 600; }
+.tema:hover { transform: translateY(-2px); border-color: var(--verde-claro); box-shadow: var(--sombra-alta); }
+.tema .icono-caja { grid-row: span 2; }
+.tema-texto b { display: block; font-size: 16.5px; color: var(--azul); line-height: 1.3; }
+.tema-texto span { display: block; font-size: 14px; color: var(--suave); margin-top: 2px; }
+.tema-ir { display: inline-flex; align-items: center; gap: 6px; font-size: 14px; font-weight: 650; color: var(--verde-texto); }
+.tema-ir svg { width: 15px; height: 15px; transition: transform .2s; }
+.tema:hover .tema-ir svg { transform: translateX(3px); }
 
-.acciones { padding: 26px 20px 8px; display: grid; gap: 12px; }
-.boton {
-  display: flex; align-items: center; gap: 14px; min-height: 68px; padding: 12px 16px 12px 14px;
-  border-radius: var(--radio); text-decoration: none;
-  transition: transform .15s ease, box-shadow .15s ease, border-color .15s ease;
+/* Conozca KpG */
+.sitio-grilla { margin-top: 26px; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.tarjeta-sitio {
+  display: flex; flex-direction: column; gap: 8px; height: 100%; padding: 16px; border-radius: 16px; text-decoration: none;
+  background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.14); transition: background .2s, border-color .2s, transform .2s;
 }
-.boton .icono { flex: 0 0 auto; width: 42px; height: 42px; border-radius: 50%; display: grid; place-items: center; }
-.boton .icono svg { width: 22px; height: 22px; }
-.boton .texto { flex: 1 1 auto; display: grid; gap: 1px; text-align: left; }
-.boton .texto b { font-size: 16px; font-weight: 600; letter-spacing: -.005em; }
-.boton .texto small { font-size: 13.5px; }
-.boton .flecha { flex: 0 0 auto; width: 18px; height: 18px; opacity: .7; transition: transform .15s ease; }
-.boton:hover .flecha { transform: translateX(3px); }
-.boton:active { transform: scale(.985); }
+.tarjeta-sitio:hover { background: rgba(255,255,255,.1); border-color: var(--dorado); transform: translateY(-2px); }
+.tarjeta-sitio b { font-size: 16px; color: #fff; line-height: 1.25; margin-top: 4px; }
+.tarjeta-sitio > span:not(.icono-caja):not(.ver) { font-size: 13.5px; color: var(--sobre-azul); }
+.tarjeta-sitio .ver { display: inline-flex; align-items: center; gap: 6px; margin-top: auto; padding-top: 4px; font-size: 13px; font-weight: 650; color: var(--dorado-claro); }
+.tarjeta-sitio .ver svg { width: 14px; height: 14px; }
+.boton-sitio { display: flex; justify-content: center; align-items: center; gap: 10px; margin-top: 22px; padding: 15px 20px; border-radius: 14px; background: var(--dorado); color: var(--azul); font-weight: 700; font-size: 16px; text-decoration: none; transition: background .2s; }
+.boton-sitio:hover { background: var(--dorado-claro); }
+.boton-sitio svg { width: 18px; height: 18px; }
 
-.principal { background: var(--azul); color: var(--blanco); box-shadow: 0 10px 24px -14px rgba(14,42,71,.7); }
-.principal .icono { background: rgba(255,255,255,.10); color: var(--blanco); }
-.principal .texto small { color: #C3CEDA; }
-.principal:hover { box-shadow: 0 14px 28px -14px rgba(14,42,71,.8); }
+/* Cómo trabajamos */
+.pasos { margin-top: 26px; display: grid; gap: 0; position: relative; }
+.pasos li { display: grid; grid-template-columns: 44px 1fr; gap: 16px; padding-bottom: 22px; position: relative; }
+.pasos li:not(:last-child)::before { content: ""; position: absolute; left: 21px; top: 46px; bottom: 2px; width: 2px; background: linear-gradient(var(--dorado), var(--linea)); }
+.pasos .num { width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center; background: var(--azul); color: #fff; font-family: var(--serif); font-weight: 700; font-size: 20px; box-shadow: 0 0 0 5px var(--verde-suave); }
+.pasos b { display: block; font-size: 17px; color: var(--azul); margin-top: 9px; }
+.pasos span { display: block; font-size: 15px; color: var(--suave); margin-top: 2px; }
 
-.secundario { background: var(--blanco); color: var(--azul); border: 1px solid var(--linea); }
-.secundario .icono { background: #F3EBDC; color: var(--dorado-texto); }
-.secundario .texto small { color: var(--suave); }
-.secundario:hover { border-color: var(--dorado); }
+/* Compromiso */
+.compromiso { background: var(--azul); color: #fff; border-radius: 22px; padding: 30px 24px; box-shadow: var(--sombra-alta); position: relative; overflow: hidden; }
+.compromiso::after { content: ""; position: absolute; right: -60px; top: -60px; width: 200px; height: 200px; border-radius: 50%; background: radial-gradient(circle, rgba(201,169,107,.22), transparent 70%); }
+.compromiso h2 { color: #fff; margin-top: 14px; }
+.compromiso ul { margin-top: 18px; display: grid; gap: 14px; }
+.compromiso li { display: grid; grid-template-columns: 26px 1fr; gap: 10px; font-size: 16px; color: #E6ECF3; }
+.compromiso li svg { width: 22px; height: 22px; color: var(--dorado-claro); margin-top: 1px; }
+.firma { margin-top: 20px; font-size: 14px; font-weight: 600; color: var(--dorado-claro); }
 
-.seccion { padding: 34px 20px 4px; }
-.seccion h2 {
-  margin: 0 6px; font-family: var(--serif); font-weight: 600; font-size: 24px; line-height: 1.15;
-  color: var(--azul); letter-spacing: -.01em;
+/* Lema */
+.lema { text-align: center; background: var(--verde-suave); position: relative; overflow: hidden; }
+.lema > * { position: relative; }
+.lema .antes { font-size: 16px; color: var(--verde-texto); font-weight: 500; }
+.lema .frase { font-family: var(--serif); font-weight: 600; font-size: clamp(32px, 8vw, 44px); line-height: 1.1; color: var(--azul); margin-top: 10px; }
+.lema .raya-doble { margin: 20px auto 0; }
+.lema .accion { max-width: 420px; margin: 28px auto 0; text-align: left; }
+
+/* Pie */
+.pie { padding: 36px 22px 110px; text-align: center; background: var(--blanco); border-top: 1px solid var(--linea); }
+.pie-enlaces { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
+.pie-boton { display: inline-flex; align-items: center; gap: 8px; padding: 11px 16px; border-radius: 999px; border: 1px solid var(--linea); background: var(--blanco); text-decoration: none; font-weight: 600; font-size: 14.5px; color: var(--azul); }
+.pie-boton svg { width: 18px; height: 18px; }
+.pie-boton.destacado { border-color: var(--dorado); background: #FBF6EC; }
+.pie-boton:hover { border-color: var(--dorado); }
+.pie-logo { width: 150px; height: auto; display: block; margin: 28px auto 0; }
+.legal { margin-top: 12px; font-size: 13px; color: var(--suave); }
+
+/* Barra de WhatsApp en celular (aparece al bajar) */
+.barra-whatsapp {
+  position: fixed; left: 12px; right: 12px; bottom: calc(12px + env(safe-area-inset-bottom)); z-index: 40;
+  display: flex; align-items: center; justify-content: center; gap: 10px; padding: 14px 18px; border-radius: 16px;
+  background: var(--verde); color: #fff; font-weight: 700; text-decoration: none; box-shadow: 0 16px 36px -14px rgba(14,42,71,.6);
+  transform: translateY(150%); transition: transform .3s cubic-bezier(.2,.7,.2,1);
 }
-.seccion .raya { margin: 12px 6px 0; width: 44px; height: 8px; }
-.seccion .bajada { margin: 12px 6px 0; color: var(--suave); font-size: 14.5px; }
+.barra-whatsapp svg { width: 22px; height: 22px; }
+.barra-whatsapp.visible { transform: none; }
+html:not(.js) .barra-whatsapp { display: none; }
 
-.lista { margin: 16px 0 0; padding: 0; list-style: none; background: var(--blanco); border: 1px solid var(--linea); border-radius: var(--radio); overflow: hidden; }
-.lista li + li { border-top: 1px solid var(--linea); }
-.lista a { display: flex; align-items: center; gap: 12px; padding: 15px 16px; text-decoration: none; min-height: 72px; }
-.lista a:hover { background: #FBF9F4; }
-.lista .que { flex: 1 1 auto; display: grid; gap: 2px; }
-.lista .que b { font-weight: 600; color: var(--azul); font-size: 15.5px; }
-.lista .que span { color: var(--suave); font-size: 14px; line-height: 1.4; }
-.lista .ir { flex: 0 0 auto; display: flex; align-items: center; gap: 4px; color: var(--dorado-texto); font-size: 13px; font-weight: 600; }
-.lista .ir svg { width: 16px; height: 16px; transition: transform .15s ease; }
-.lista a:hover .ir svg { transform: translateX(3px); }
-
-.pasos { margin: 18px 6px 0; padding: 0; list-style: none; counter-reset: paso; }
-.pasos li { display: grid; grid-template-columns: 40px 1fr; gap: 4px 12px; padding: 14px 0; border-top: 1px solid var(--linea); }
-.pasos li:last-child { border-bottom: 1px solid var(--linea); }
-.pasos li::before {
-  counter-increment: paso; content: counter(paso); grid-row: span 2;
-  font-family: var(--serif); font-weight: 500; font-size: 30px; line-height: 1; color: var(--dorado-texto);
-}
-.pasos b { color: var(--azul); font-weight: 600; font-size: 15.5px; }
-.pasos span { color: var(--suave); font-size: 14.5px; }
-
-.promesa {
-  margin: 34px 20px 0; padding: 26px 24px 22px; border-radius: var(--radio);
-  background: var(--azul); color: var(--blanco); position: relative; overflow: hidden;
-}
-.promesa::before { content: ""; display: block; width: 44px; height: 8px; border-top: 2px solid var(--dorado); border-bottom: 2px solid var(--dorado); margin-bottom: 16px; }
-.promesa h2 { margin: 0; font-family: var(--serif); font-size: 23px; line-height: 1.2; font-weight: 600; letter-spacing: -.01em; }
-.promesa ul { margin: 14px 0 0; padding: 0; list-style: none; display: grid; gap: 12px; }
-.promesa li { position: relative; padding-left: 22px; font-size: 15.5px; line-height: 1.45; color: #E7ECF2; }
-.promesa li::before { content: ""; position: absolute; left: 0; top: .62em; width: 11px; height: 5px; border-top: 1.5px solid var(--dorado); border-bottom: 1.5px solid var(--dorado); }
-.promesa p { margin: 16px 0 0; color: var(--dorado); font-size: 14px; font-weight: 500; }
-
-.lema { padding: 44px 28px 4px; text-align: center; }
-.lema .antes { margin: 0; color: var(--suave); font-size: 15px; letter-spacing: .01em; }
-.lema .frase { margin: 10px 0 0; font-family: var(--serif); font-weight: 600; font-size: 29px; line-height: 1.12;
-               color: var(--azul); letter-spacing: -.012em; text-wrap: balance; }
-.lema .raya { margin-top: 18px; }
-.pie { padding: 30px 20px 34px; text-align: center; }
-.redes { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; }
-.redes a {
-  display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 16px;
-  border: 1px solid var(--linea); border-radius: 999px; background: var(--blanco);
-  text-decoration: none; color: var(--azul); font-size: 14px; font-weight: 500;
-}
-.redes a:hover { border-color: var(--dorado); }
-.redes svg { width: 18px; height: 18px; }
-.legal { margin: 22px 0 0; font-size: 12.5px; color: var(--suave); line-height: 1.6; }
-.legal img { display: block; width: 120px; height: auto; margin: 0 auto 12px; opacity: .9; }
-
-.oculto { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
-
-@media (min-width: 620px) {
-  body { background: var(--papel-hondo); }
-  .pagina { margin: 36px auto; min-height: 0; border-radius: 22px; overflow: hidden;
-            box-shadow: 0 1px 0 var(--linea), 0 30px 70px -36px rgba(14,42,71,.35); }
-}
-@media (max-width: 360px) {
-  .titular h1 { font-size: 30px; }
-  .boton .texto small { font-size: 12.5px; }
-}
+/* Aparición suave (solo con JavaScript y si el equipo no pide menos movimiento) */
+.js [data-revelar] { opacity: 0; transform: translateY(18px); transition: opacity .6s ease, transform .6s cubic-bezier(.2,.7,.2,1); }
+.js [data-revelar].visible { opacity: 1; transform: none; }
 @media (prefers-reduced-motion: reduce) {
-  * { transition: none !important; }
+  .js [data-revelar] { opacity: 1; transform: none; transition: none; }
+  .accion, .tema, .tarjeta-sitio, .barra-whatsapp { transition: none; }
 }
+
+/* ---------- Computador: dos columnas ---------- */
+@media (min-width: 1000px) {
+  .marco { display: grid; grid-template-columns: minmax(420px, 44%) 1fr; min-height: 100vh; }
+  .lateral { position: sticky; top: 0; height: 100vh; overflow-y: auto; display: flex; align-items: center; padding: 48px clamp(32px, 4vw, 64px) 170px; }
+  .lateral-contenido { margin: 0; max-width: 520px; }
+  .bloque { padding: 72px clamp(32px, 5vw, 80px); }
+  .bloque > *, .bloque > .raya-doble { margin-left: 0; margin-right: 0; max-width: 680px; }
+  .temas { grid-template-columns: 1fr 1fr; }
+  .tema { grid-template-columns: auto 1fr; }
+  .lema { text-align: left; }
+  .lema .raya-doble { margin-left: 0; }
+  .lema .accion { margin-left: 0; }
+  .pie { text-align: left; padding: 40px clamp(32px, 5vw, 80px); }
+  .pie-enlaces { justify-content: flex-start; }
+  .pie-logo { margin-left: 0; }
+  .barra-whatsapp { display: none; }
+}
+@media (max-width: 380px) {
+  .sitio-grilla { grid-template-columns: 1fr; }
+}
+.tarjeta-sitio .icono-caja { flex: none; }
 </style>
 </head>
 <body>
-<main class="pagina">
+<a class="saltar" href="#contenido">Ir al contenido</a>
+<div class="marco">
 
-  <div class="portada" role="img" aria-label="Cordillera de los Andes, con la doble línea dorada de KpG"></div>
-
-  <header class="identidad">
-    <div class="avatar"><img src="assets/kpg-avatar.svg" width="116" height="116" alt="KpG, Contadores y Asesores"></div>
-    <p class="nombre">KPG y Asesores SpA</p>
-    <p class="usuario"><a href="https://www.instagram.com/kpg.asesorias/" target="_blank" rel="noopener">@kpg.asesorias</a></p>
-    <p class="rubro">Contadores y asesores para empresas</p>
+  <header class="lateral">
+    <div class="lateral-contenido">
+      <div class="identidad">
+        <img class="avatar" src="assets/kpg-avatar.svg" width="72" height="72" alt="KpG, Contadores y Asesores">
+        <div>
+          <p class="nombre">KPG y Asesores SpA</p>
+          <p class="usuario">@kpg.asesorias</p>
+        </div>
+      </div>
+      <p class="kicker">Contadores y asesores · a distancia y en terreno</p>
+      <h1>Detrás de cada respuesta, <em>un contador.</em></h1>
+      <span class="raya-doble" aria-hidden="true"></span>
+      <p class="bajada"><strong>Trato directo</strong>, respuestas claras y su contabilidad al día.</p>
+      <nav class="acciones" aria-label="Contacto principal">
+        <a class="accion accion-whatsapp" data-evento="whatsapp" href="https://wa.me/56942652503?text=Hola%20KpG%2C%20vengo%20de%20su%20p%C3%A1gina.%20Quiero%20conversar%20sobre%20la%20contabilidad%20de%20mi%20empresa." target="_blank" rel="noopener"><span class="accion-icono"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.5 11.6a8.6 8.6 0 0 1-12.7 7.6L3.5 20.5l1.4-4.1a8.6 8.6 0 1 1 15.6-4.8Z"/><path d="M9 8.6c.2-.4.5-.4.8-.3l.9.7c.2.2.3.5.1.7l-.4.7c.6 1.1 1.4 1.9 2.6 2.5l.6-.5c.2-.2.5-.2.7 0l.9.9c.2.2.2.6 0 .8-.5.5-1.2.7-1.9.5-2.6-.8-4.3-2.4-5.2-4.8-.2-.6 0-1.1.4-1.4l.5-.5Z" fill="currentColor" stroke="none"/></svg></span><span class="accion-texto"><b>Escribir por WhatsApp</b><small>Le respondemos directamente</small></span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        <a class="accion accion-sitio" data-evento="sitio" href="https://kpg-asesorias.github.io/" target="_blank" rel="noopener"><span class="accion-icono"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M3.8 12h16.4M12 3.5c2.1 2.3 3.2 5.1 3.2 8.5s-1.1 6.2-3.2 8.5c-2.1-2.3-3.2-5.1-3.2-8.5S9.9 5.8 12 3.5Z"/></svg></span><span class="accion-texto"><b>Conozca KpG</b><small>Servicios, planes y cómo trabajamos</small></span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      </nav>
+      <ul class="sellos" aria-label="Así trabajamos">
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>Propuesta por escrito</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>Reunión mensual incluida</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>Factura por el servicio</li>
+      </ul>
+    </div>
   </header>
 
-  <section class="titular">
-    <h1>Detrás de cada respuesta,<br> un contador.</h1>
-    <div class="raya" aria-hidden="true"></div>
-    <p><strong>Trato directo</strong>, respuestas claras y su contabilidad al día.</p>
-  </section>
+  <main id="contenido" class="contenido">
 
-  <nav class="acciones" aria-label="Contacto">
-    <a class="boton principal" data-evento="whatsapp" href="https://wa.me/56942652503?text=Hola%20KpG%2C%20vengo%20de%20su%20p%C3%A1gina.%20Quiero%20conversar%20sobre%20la%20contabilidad%20de%20mi%20empresa." target="_blank" rel="noopener">
-      <span class="icono" aria-hidden="true">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M20.5 11.6a8.6 8.6 0 0 1-12.7 7.6L3.5 20.5l1.4-4.1a8.6 8.6 0 1 1 15.6-4.8Z"/><path d="M9 8.6c.2-.4.5-.4.8-.3l.9.7c.2.2.3.5.1.7l-.4.7c.6 1.1 1.4 1.9 2.6 2.5l.6-.5c.2-.2.5-.2.7 0l.9.9c.2.2.2.6 0 .8-.5.5-1.2.7-1.9.5-2.6-.8-4.3-2.4-5.2-4.8-.2-.6 0-1.1.4-1.4l.5-.5Z" fill="currentColor" stroke="none"/></svg>
-      </span>
-      <span class="texto"><b>Escribir por WhatsApp</b><small>Le respondemos directamente</small></span>
-      <svg class="flecha" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-    </a>
-    <a class="boton secundario" data-evento="reunion" href="https://wa.me/56942652503?text=Hola%20KpG%2C%20quiero%20agendar%20una%20reuni%C3%B3n%20para%20conversar%20sobre%20mi%20empresa." target="_blank" rel="noopener">
-      <span class="icono" aria-hidden="true">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M8 3v4M16 3v4M3.5 10h17M8 14h3M8 17h6"/></svg>
-      </span>
-      <span class="texto"><b>Agendar una reunión</b><small>Conversemos su caso con calma</small></span>
-      <svg class="flecha" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-    </a>
-  </nav>
+    <section class="bloque fondo-gris" aria-labelledby="t-mes" data-revelar>
+      <p class="kicker oscuro">Para que no se le pase</p>
+      <h2 id="t-mes">Su mes tributario</h2>
+      <span class="raya-doble" aria-hidden="true"></span>
+      <div class="calendario">
+        <div class="cal-cab">
+          <b>Próximos vencimientos</b>
+          <span class="uf">UF <strong data-uf>$41.439,89</strong> <small data-uf-fecha>al 30 de noviembre</small></span>
+        </div>
+        <div class="cal-linea" data-venc="f29">
+          <div class="fecha"><b data-dia>20</b><small data-mes>c/mes</small></div>
+          <div class="cal-texto"><b>F29 · IVA del mes</b><span data-detalle>Vence el día 20 de cada mes</span></div>
+          <span class="faltan" data-faltan hidden></span>
+        </div>
+        <div class="cal-linea" data-venc="previred">
+          <div class="fecha"><b data-dia>13</b><small data-mes>c/mes</small></div>
+          <div class="cal-texto"><b>Previred · cotizaciones</b><span data-detalle>Vence el día 13 de cada mes</span></div>
+          <span class="faltan" data-faltan hidden></span>
+        </div>
+        <p class="cal-nota">El F29 es la declaración mensual de IVA y vence el 20 si su empresa emite factura electrónica. En Previred se pagan las cotizaciones de sus trabajadores. Si una fecha cae en fin de semana o feriado, se corre al día hábil siguiente.</p>
+        <a class="enlace" data-evento="duda-mes" href="https://wa.me/56942652503?text=Hola%20KpG%2C%20tengo%20una%20consulta%20sobre%20los%20impuestos%20de%20este%20mes." target="_blank" rel="noopener">¿Tiene una duda con su F29 o Previred? Escríbanos <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      </div>
+    </section>
 
-  <section class="seccion" aria-labelledby="t-ayuda">
-    <h2 id="t-ayuda">¿En qué le ayudamos?</h2>
-    <div class="raya" aria-hidden="true"></div>
-    <p class="bajada">Toque una opción y se abre WhatsApp con su consulta lista para enviar.</p>
-    <ul class="lista">
-      <li><a data-evento="contabilidad" href="https://wa.me/56942652503?text=Hola%20KpG%2C%20quiero%20consultar%20por%20contabilidad%20e%20impuestos%20para%20mi%20empresa." target="_blank" rel="noopener">
-        <span class="que"><b>Contabilidad e impuestos</b><span>F29, libros y balance, al día cada mes.</span></span>
-        <span class="ir">Consultar <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></span></a></li>
-      <li><a data-evento="remuneraciones" href="https://wa.me/56942652503?text=Hola%20KpG%2C%20quiero%20consultar%20por%20remuneraciones%20para%20mi%20empresa." target="_blank" rel="noopener">
-        <span class="que"><b>Remuneraciones</b><span>Liquidaciones, Previred, contratos y finiquitos.</span></span>
-        <span class="ir">Consultar <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></span></a></li>
-      <li><a data-evento="renta" href="https://wa.me/56942652503?text=Hola%20KpG%2C%20quiero%20consultar%20por%20la%20Operaci%C3%B3n%20Renta." target="_blank" rel="noopener">
-        <span class="que"><b>Operación Renta</b><span>La declaración anual de su empresa y de sus socios.</span></span>
-        <span class="ir">Consultar <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></span></a></li>
-      <li><a data-evento="asesoria" href="https://wa.me/56942652503?text=Hola%20KpG%2C%20quiero%20consultar%20por%20asesor%C3%ADa%20para%20tomar%20decisiones%20en%20mi%20empresa." target="_blank" rel="noopener">
-        <span class="que"><b>Asesoría para decidir</b><span>Flujo de caja, planificación tributaria y reportes.</span></span>
-        <span class="ir">Consultar <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></span></a></li>
-    </ul>
-  </section>
+    <section class="bloque" aria-labelledby="t-ayuda" data-revelar>
+      <p class="kicker oscuro">Su consulta, directo a WhatsApp</p>
+      <h2 id="t-ayuda">¿En qué le ayudamos?</h2>
+      <span class="raya-doble" aria-hidden="true"></span>
+      <p class="intro">Elija un tema y se abre WhatsApp con su consulta lista para enviar.</p>
+      <ul class="temas">
+      <li><a class="tema" data-evento="contabilidad" href="https://wa.me/56942652503?text=Hola%20KpG%2C%20quiero%20consultar%20por%20contabilidad%20e%20impuestos%20para%20mi%20empresa." target="_blank" rel="noopener"><span class="icono-caja"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v15H6.5A2.5 2.5 0 0 0 4 20.5v-15Z"/><path d="M4 20.5A2.5 2.5 0 0 0 6.5 23H20v-5M8 7.5h8M8 11h6"/></svg></span><span class="tema-texto"><b>Contabilidad e impuestos</b><span>F29, libros y balance, al día cada mes.</span></span><span class="tema-ir">Consultar <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a></li>
+      <li><a class="tema" data-evento="remuneraciones" href="https://wa.me/56942652503?text=Hola%20KpG%2C%20quiero%20consultar%20por%20remuneraciones%20para%20mi%20empresa." target="_blank" rel="noopener"><span class="icono-caja"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.3"/><path d="M3 20a6 6 0 0 1 12 0"/><path d="M16 5.2a3.2 3.2 0 0 1 0 6M18 14.4a5.6 5.6 0 0 1 3 5.6"/></svg></span><span class="tema-texto"><b>Remuneraciones</b><span>Liquidaciones, Previred, contratos y finiquitos.</span></span><span class="tema-ir">Consultar <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a></li>
+      <li><a class="tema" data-evento="renta" href="https://wa.me/56942652503?text=Hola%20KpG%2C%20quiero%20consultar%20por%20la%20Operaci%C3%B3n%20Renta." target="_blank" rel="noopener"><span class="icono-caja"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h9l4 4v14H6z"/><path d="M14.5 3v4.5H19M9 12h7M9 15.5h7M9 19h4"/></svg></span><span class="tema-texto"><b>Operación Renta</b><span>La declaración anual de su empresa y de sus socios.</span></span><span class="tema-ir">Consultar <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a></li>
+      <li><a class="tema" data-evento="empresa" href="https://wa.me/56942652503?text=Hola%20KpG%2C%20quiero%20crear%20una%20empresa%20y%20necesito%20asesor%C3%ADa." target="_blank" rel="noopener"><span class="icono-caja"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21v-8"/><path d="M12 13c0-4.4 3-7.5 8-7.5 0 4.6-3.2 7.5-8 7.5Z"/><path d="M12 15.5C12 12 9.6 9.5 5 9.5c0 3.7 2.6 6 7 6Z"/></svg></span><span class="tema-texto"><b>Empezar mi empresa</b><span>Tipo de sociedad, inicio de actividades y régimen tributario.</span></span><span class="tema-ir">Consultar <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a></li>
+      <li><a class="tema" data-evento="asesoria" href="https://wa.me/56942652503?text=Hola%20KpG%2C%20quiero%20consultar%20por%20asesor%C3%ADa%20para%20tomar%20decisiones%20en%20mi%20empresa." target="_blank" rel="noopener"><span class="icono-caja"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20h16"/><path d="M7 16v-4M12 16V8M17 16v-7"/><path d="m5 9 5-4 4 3 5-4"/></svg></span><span class="tema-texto"><b>Asesoría para decidir</b><span>Flujo de caja, planificación tributaria y reportes.</span></span><span class="tema-ir">Consultar <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a></li>
+      <li><a class="tema" data-evento="reunion" href="https://wa.me/56942652503?text=Hola%20KpG%2C%20quiero%20agendar%20una%20reuni%C3%B3n%20para%20conversar%20sobre%20mi%20empresa." target="_blank" rel="noopener"><span class="icono-caja"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M8 3v4M16 3v4M3.5 10h17"/><path d="m9.5 15 2 2 3.5-4"/></svg></span><span class="tema-texto"><b>Agendar una reunión</b><span>Por videollamada o en persona, para conversar su caso con calma.</span></span><span class="tema-ir">Consultar <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a></li>
+      </ul>
+    </section>
 
-  <section class="seccion" aria-labelledby="t-como">
-    <h2 id="t-como">Cómo trabajamos</h2>
-    <div class="raya" aria-hidden="true"></div>
-    <ol class="pasos">
-      <li><b>Conversamos</b><span>Nos cuenta cómo funciona su empresa y qué necesita.</span></li>
-      <li><b>Propuesta por escrito</b><span>Antes de empezar, recibe el detalle de cada cobro, línea por línea.</span></li>
-      <li><b>Mes a mes</b><span>Su contabilidad al día, al menos una reunión al mes y factura por el servicio.</span></li>
-    </ol>
-  </section>
+    <section class="bloque fondo-azul" aria-labelledby="t-conozca" data-revelar>
+      <p class="kicker">Nuestro sitio</p>
+      <h2 id="t-conozca">Conozca KpG antes de escribirnos</h2>
+      <span class="raya-doble" aria-hidden="true"></span>
+      <p class="intro">Los servicios, los planes y la forma en que trabajamos, explicados con calma.</p>
+      <ul class="sitio-grilla">
+      <li><a class="tarjeta-sitio" data-evento="sitio-planes" href="https://kpg-asesorias.github.io/planes.html" target="_blank" rel="noopener"><span class="icono-caja claro"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.5 12.6V5a1.5 1.5 0 0 1 1.5-1.5h7.6L21 11.9a1.5 1.5 0 0 1 0 2.1l-7 7a1.5 1.5 0 0 1-2.1 0Z"/><circle cx="8" cy="8" r="1.4"/></svg></span><b>Planes y precios</b><span>Cinco packs en UF, con IVA incluido.</span><span class="ver">Ver en el sitio <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a></li>
+      <li><a class="tarjeta-sitio" data-evento="sitio-como" href="https://kpg-asesorias.github.io/como-trabajamos.html" target="_blank" rel="noopener"><span class="icono-caja claro"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h3M4 12h3M4 18h3"/><path d="M10 6h10M10 12h10M10 18h7"/></svg></span><b>Cómo trabajamos</b><span>De la primera conversación al primer mes, todo por escrito.</span><span class="ver">Ver en el sitio <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a></li>
+      <li><a class="tarjeta-sitio" data-evento="sitio-consultas" href="https://kpg-asesorias.github.io/consultas.html" target="_blank" rel="noopener"><span class="icono-caja claro"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M9.6 9.4a2.5 2.5 0 0 1 4.8.9c0 1.7-2.4 2.2-2.4 3.7M12 17.2h.01"/></svg></span><b>Consultas frecuentes</b><span>Respuestas claras a las dudas de cada mes.</span><span class="ver">Ver en el sitio <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a></li>
+      <li><a class="tarjeta-sitio" data-evento="sitio-nosotros" href="https://kpg-asesorias.github.io/nosotros.html" target="_blank" rel="noopener"><span class="icono-caja claro"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 10.5 12 4l8 6.5V20H4z"/><path d="M9.5 20v-5.5h5V20"/></svg></span><b>Sobre KpG</b><span>Quiénes somos y por qué trabajamos así.</span><span class="ver">Ver en el sitio <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a></li>
+      </ul>
+      <a class="boton-sitio" data-evento="sitio-boton" href="https://kpg-asesorias.github.io/" target="_blank" rel="noopener">Ir al sitio de KpG <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+    </section>
 
-  <section class="promesa" aria-labelledby="t-compromiso">
-    <h2 id="t-compromiso">Nuestro compromiso</h2>
-    <ul>
-      <li>Si su consulta necesita revisión, le decimos cuándo tendrá la respuesta.</li>
-      <li>Si algo no lo sabemos, se lo decimos y lo averiguamos.</li>
-      <li>Lo que acordamos en una reunión queda por escrito.</li>
-    </ul>
-    <p>KpG · Contadores y Asesores</p>
-  </section>
+    <section class="bloque" aria-labelledby="t-como" data-revelar>
+      <p class="kicker oscuro">Paso a paso</p>
+      <h2 id="t-como">Cómo trabajamos</h2>
+      <span class="raya-doble" aria-hidden="true"></span>
+      <ol class="pasos">
+      <li><span class="num">1</span><div><b>Conversamos</b><span>Nos cuenta cómo funciona su empresa y qué necesita.</span></div></li>
+      <li><span class="num">2</span><div><b>Propuesta por escrito</b><span>Antes de empezar, recibe el detalle de cada cobro, línea por línea.</span></div></li>
+      <li><span class="num">3</span><div><b>Mes a mes</b><span>Su contabilidad al día, al menos una reunión al mes y factura por el servicio.</span></div></li>
+      </ol>
+    </section>
 
-  <section class="lema" aria-label="Lema de KpG">
-    <p class="antes">Soñar es fácil. Empezar, no.</p>
-    <p class="frase">Ni más, ni menos:<br> lo justo.</p>
-    <div class="raya" aria-hidden="true"></div>
-  </section>
+    <section class="bloque fondo-gris" aria-labelledby="t-compromiso" data-revelar>
+      <div class="compromiso">
+        <span class="raya-doble clara" aria-hidden="true"></span>
+        <h2 id="t-compromiso">Nuestro compromiso</h2>
+        <ul>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg><span>Si su consulta necesita revisión, le decimos cuándo tendrá la respuesta.</span></li>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg><span>Si algo no lo sabemos, se lo decimos y lo averiguamos.</span></li>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg><span>Lo que acordamos en una reunión queda por escrito.</span></li>
+        </ul>
+        <p class="firma">KpG · Contadores y Asesores</p>
+      </div>
+    </section>
 
-  <footer class="pie">
-    <div class="redes">
-      <a data-evento="instagram" href="https://www.instagram.com/kpg.asesorias/" target="_blank" rel="noopener">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.3" cy="6.7" r=".9" fill="currentColor" stroke="none"/></svg>
-        Instagram
-      </a>
-      <a data-evento="sitio" href="https://kpg-asesorias.github.io/" target="_blank" rel="noopener">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M3.8 12h16.4M12 3.5c2.1 2.3 3.2 5.1 3.2 8.5s-1.1 6.2-3.2 8.5c-2.1-2.3-3.2-5.1-3.2-8.5S9.9 5.8 12 3.5Z"/></svg>
-        Sitio web
-      </a>
-      <a data-evento="contacto" href="assets/kpg.vcf" download="KpG Contadores y Asesores.vcf">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8.5" r="3.5"/><path d="M5 20a7 7 0 0 1 14 0"/><path d="M19 4v5M16.5 6.5h5"/></svg>
-        Guardar contacto
-      </a>
-    </div>
-    <p class="legal">
-      <img src="assets/kpg-logo-horizontal.svg" width="120" height="45" alt="">
-      KPG y Asesores SpA · RUT 78.366.703-7<br>
-      Contabilidad, impuestos y remuneraciones para empresas.
-    </p>
-  </footer>
+    <section class="bloque lema" aria-label="Lema de KpG" data-revelar>
+      <p class="antes">Soñar es fácil. Empezar, no.</p>
+      <p class="frase">Ni más, ni menos:<br> lo justo.</p>
+      <span class="raya-doble" aria-hidden="true"></span>
+      <a class="accion accion-whatsapp compacta" data-evento="whatsapp-final" href="https://wa.me/56942652503?text=Hola%20KpG%2C%20vengo%20de%20su%20p%C3%A1gina.%20Quiero%20conversar%20sobre%20la%20contabilidad%20de%20mi%20empresa." target="_blank" rel="noopener"><span class="accion-icono"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.5 11.6a8.6 8.6 0 0 1-12.7 7.6L3.5 20.5l1.4-4.1a8.6 8.6 0 1 1 15.6-4.8Z"/><path d="M9 8.6c.2-.4.5-.4.8-.3l.9.7c.2.2.3.5.1.7l-.4.7c.6 1.1 1.4 1.9 2.6 2.5l.6-.5c.2-.2.5-.2.7 0l.9.9c.2.2.2.6 0 .8-.5.5-1.2.7-1.9.5-2.6-.8-4.3-2.4-5.2-4.8-.2-.6 0-1.1.4-1.4l.5-.5Z" fill="currentColor" stroke="none"/></svg></span><span class="accion-texto"><b>Conversemos su caso</b><small>Escríbanos por WhatsApp</small></span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+    </section>
 
-</main>
+    <footer class="pie">
+      <div class="pie-enlaces">
+        <a class="pie-boton destacado" data-evento="contacto" href="assets/kpg.vcf" download="KpG Contadores y Asesores.vcf"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8.5" r="3.5"/><path d="M5 20a7 7 0 0 1 14 0"/><path d="M19 4v5M16.5 6.5h5"/></svg>Guardar contacto</a>
+        <a class="pie-boton" data-evento="sitio-pie" href="https://kpg-asesorias.github.io/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M3.8 12h16.4M12 3.5c2.1 2.3 3.2 5.1 3.2 8.5s-1.1 6.2-3.2 8.5c-2.1-2.3-3.2-5.1-3.2-8.5S9.9 5.8 12 3.5Z"/></svg>Sitio web</a>
+        <a class="pie-boton" data-evento="instagram" href="https://www.instagram.com/kpg.asesorias/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.3" cy="6.7" r=".9" fill="currentColor" stroke="none"/></svg>Instagram</a>
+      </div>
+      <img class="pie-logo" src="assets/kpg-logo-horizontal.svg" width="150" height="56" alt="KpG, Contadores y Asesores">
+      <p class="legal">KPG y Asesores SpA · RUT 78.366.703-7<br>Contabilidad, impuestos y remuneraciones para empresas.</p>
+    </footer>
+  </main>
+</div>
+
+<a class="barra-whatsapp" data-evento="whatsapp-barra" href="https://wa.me/56942652503?text=Hola%20KpG%2C%20vengo%20de%20su%20p%C3%A1gina.%20Quiero%20conversar%20sobre%20la%20contabilidad%20de%20mi%20empresa." target="_blank" rel="noopener" aria-hidden="true" tabindex="-1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.5 11.6a8.6 8.6 0 0 1-12.7 7.6L3.5 20.5l1.4-4.1a8.6 8.6 0 1 1 15.6-4.8Z"/><path d="M9 8.6c.2-.4.5-.4.8-.3l.9.7c.2.2.3.5.1.7l-.4.7c.6 1.1 1.4 1.9 2.6 2.5l.6-.5c.2-.2.5-.2.7 0l.9.9c.2.2.2.6 0 .8-.5.5-1.2.7-1.9.5-2.6-.8-4.3-2.4-5.2-4.8-.2-.6 0-1.1.4-1.4l.5-.5Z" fill="currentColor" stroke="none"/></svg><span>Escribir por WhatsApp</span></a>
+
+<script>
+/* KpG · página de enlaces. Todo el contenido se ve igual sin JavaScript. */
+(function () {
+  "use strict";
+  document.documentElement.classList.add("js");
+  var MESES = ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"];
+  var CORTOS = ["ene", "feb", "mar", "abr", "may", "jun", "jul", "ago", "sep", "oct", "nov", "dic"];
+  var DIAS = ["domingo", "lunes", "martes", "miércoles", "jueves", "viernes", "sábado"];
+  var UF_RESPALDO = { valor: 41439.89, fecha: "2026-11-30" };
+  function $(s, c) { return (c || document).querySelector(s); }
+  function $$(s, c) { return Array.prototype.slice.call((c || document).querySelectorAll(s)); }
+  function pesos(n) { return "$" + n.toLocaleString("es-CL", { minimumFractionDigits: 2, maximumFractionDigits: 2 }); }
+
+  /* Aparición suave al bajar */
+  var revelar = $$("[data-revelar]");
+  if ("IntersectionObserver" in window) {
+    var io = new IntersectionObserver(function (es) {
+      es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add("visible"); io.unobserve(e.target); } });
+    }, { rootMargin: "0px 0px -6% 0px", threshold: 0.05 });
+    revelar.forEach(function (el) { io.observe(el); });
+  } else { revelar.forEach(function (el) { el.classList.add("visible"); }); }
+
+  /* Barra de WhatsApp en celular: aparece cuando los botones de arriba ya no se ven */
+  var barra = $(".barra-whatsapp"), acciones = $(".acciones"), pie = $(".pie");
+  if (barra && acciones && "IntersectionObserver" in window) {
+    var arribaVisible = true, pieVisible = false;
+    var pintar = function () {
+      var v = !arribaVisible && !pieVisible;
+      barra.classList.toggle("visible", v);
+      barra.setAttribute("tabindex", v ? "0" : "-1");
+      barra.setAttribute("aria-hidden", v ? "false" : "true");
+    };
+    new IntersectionObserver(function (es) { arribaVisible = es[0].isIntersecting; pintar(); }).observe(acciones);
+    if (pie) new IntersectionObserver(function (es) { pieVisible = es[0].isIntersecting; pintar(); }).observe(pie);
+  }
+
+  /* UF del día (si la fuente pública responde; si no, queda el último valor conocido) */
+  function pintarUF(valor, fecha, enVivo) {
+    var f = new Date(fecha + (fecha.length === 10 ? "T12:00:00" : ""));
+    $$("[data-uf]").forEach(function (el) { el.textContent = pesos(valor); });
+    $$("[data-uf-fecha]").forEach(function (el) { el.textContent = enVivo ? "hoy" : "al " + f.getDate() + " de " + MESES[f.getMonth()]; });
+  }
+  pintarUF(UF_RESPALDO.valor, UF_RESPALDO.fecha, false);
+  if (window.fetch) {
+    var control = window.AbortController ? new AbortController() : null;
+    var reloj = setTimeout(function () { if (control) control.abort(); }, 5000);
+    fetch("https://mindicador.cl/api", control ? { signal: control.signal } : {})
+      .then(function (r) { return r.ok ? r.json() : Promise.reject(); })
+      .then(function (d) { clearTimeout(reloj); if (d && d.uf && d.uf.valor) pintarUF(d.uf.valor, String(d.uf.fecha).slice(0, 10), true); })
+      .catch(function () { clearTimeout(reloj); });
+  }
+
+  /* Próximos vencimientos: F29 el 20 y Previred el 13; si cae en fin de semana pasa al lunes (feriados no incluidos) */
+  function proximo(dia) {
+    var hoy = new Date(); hoy.setHours(0, 0, 0, 0);
+    var calc = function (m, a) { var d = new Date(a, m, dia); while (d.getDay() === 0 || d.getDay() === 6) d.setDate(d.getDate() + 1); return d; };
+    var v = calc(hoy.getMonth(), hoy.getFullYear());
+    if (v < hoy) v = calc(hoy.getMonth() + 1, hoy.getFullYear());
+    var periodo = new Date(v.getFullYear(), v.getMonth() - 1, 1);
+    return { fecha: v, faltan: Math.round((v - hoy) / 86400000), periodo: MESES[periodo.getMonth()] };
+  }
+  [["f29", 20], ["previred", 13]].forEach(function (par) {
+    var caja = $("[data-venc='" + par[0] + "']");
+    if (!caja) return;
+    var p = proximo(par[1]);
+    $("[data-dia]", caja).textContent = p.fecha.getDate();
+    $("[data-mes]", caja).textContent = CORTOS[p.fecha.getMonth()];
+    $("[data-detalle]", caja).textContent = (par[0] === "f29" ? "Declaración de " : "Cotizaciones de ") + p.periodo + " · " + DIAS[p.fecha.getDay()] + " " + p.fecha.getDate() + " de " + MESES[p.fecha.getMonth()];
+    var f = $("[data-faltan]", caja);
+    f.textContent = p.faltan === 0 ? "Vence hoy" : p.faltan === 1 ? "Vence mañana" : "Faltan " + p.faltan + " días";
+    f.classList.toggle("urgente", p.faltan <= 5);
+    f.hidden = false;
+  });
+})();
+</script>
 </body>
 </html>
