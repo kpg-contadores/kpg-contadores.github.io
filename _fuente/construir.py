@@ -131,8 +131,8 @@ html = f"""<!doctype html>
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="KpG, contadores y asesores: detrás de cada respuesta, un contador.">
 <meta name="twitter:card" content="summary_large_image">
-<link rel="preload" href="assets/fuentes/source-serif-4-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="assets/fuentes/inter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fuentes/libre-caslon-text-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fuentes/archivo-latin-wdth-normal.woff2" as="font" type="font/woff2" crossorigin>
 <style>
 {CSS}</style>
 </head>
