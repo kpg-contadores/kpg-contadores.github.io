@@ -232,10 +232,25 @@ html:not(.js) .barra-whatsapp { display: none; }
 /* ---------- Computador: dos columnas ---------- */
 @media (min-width: 1000px) {
   .marco { display: grid; grid-template-columns: minmax(420px, 44%) 1fr; min-height: 100vh; }
-  .lateral { position: sticky; top: 0; height: 100vh; overflow-y: auto; display: flex; align-items: center; padding: 48px clamp(32px, 4vw, 64px) 170px; }
+  /* La columna izquierda queda fija y siempre completa: sus medidas se ajustan al alto de la ventana,
+     así nunca tiene barra propia y la ruedita mueve solo el lado derecho. */
+  .lateral {
+    position: sticky; top: 0; height: 100vh; overflow: hidden; display: flex; align-items: center; align-items: safe center;
+    padding: clamp(20px, 6vh, 48px) clamp(32px, 4vw, 64px) clamp(44px, 30vh - 110px, 170px);
+  }
   .lateral-contenido { margin: 0; max-width: 520px; }
+  .lateral .avatar { width: clamp(48px, 8vh, 64px); height: clamp(48px, 8vh, 64px); }
+  .lateral .kicker { margin-top: clamp(12px, 3.6vh, 30px); }
+  .lateral h1 { font-size: clamp(34px, 7vh, 58px); margin-top: clamp(6px, 1.2vh, 10px); }
+  .lateral .raya-doble { margin-top: clamp(10px, 2.2vh, 18px); }
+  .lateral .bajada { font-size: clamp(16px, 2.6vh, 18px); margin-top: clamp(8px, 2vh, 16px); }
+  .lateral .acciones { margin-top: clamp(12px, 3.2vh, 26px); gap: clamp(8px, 1.4vh, 12px); }
+  .lateral .accion { min-height: clamp(54px, 9vh, 72px); padding-top: clamp(8px, 1.8vh, 15px); padding-bottom: clamp(8px, 1.8vh, 15px); }
+  .lateral .accion-icono { width: clamp(38px, 6vh, 44px); height: clamp(38px, 6vh, 44px); }
+  .lateral .sellos { margin-top: clamp(12px, 3vh, 24px); }
   .bloque { padding: 72px clamp(32px, 5vw, 80px); }
   .bloque > *, .bloque > .raya-doble { margin-left: 0; margin-right: 0; max-width: 680px; }
+  .bloque > .kicker, .bloque > h2, .bloque > .intro { margin-left: 0; margin-right: 0; }
   .temas { grid-template-columns: 1fr 1fr; }
   .tema { grid-template-columns: auto 1fr; }
   .lema { text-align: left; }
@@ -245,6 +260,11 @@ html:not(.js) .barra-whatsapp { display: none; }
   .pie-enlaces { justify-content: flex-start; }
   .pie-logo { margin-left: 0; }
   .barra-whatsapp { display: none; }
+}
+/* Ventanas muy bajas, donde no cabe completa: la columna deja de estar fija y baja junto con la página */
+@media (min-width: 1000px) and (max-height: 539px), (min-width: 1000px) and (max-width: 1199px) and (max-height: 619px) {
+  .marco { align-items: start; }
+  .lateral { position: relative; height: auto; min-height: 100vh; }
 }
 @media (max-width: 380px) {
   .sitio-grilla { grid-template-columns: 1fr; }
@@ -433,10 +453,23 @@ html:not(.js) .barra-whatsapp { display: none; }
       .catch(function () { clearTimeout(reloj); });
   }
 
-  /* Próximos vencimientos: F29 el 20 y Previred el 13; si cae en fin de semana pasa al lunes (feriados no incluidos) */
+  /* Próximos vencimientos: F29 el 20 y Previred el 13; si cae en fin de semana o feriado, pasa al día hábil siguiente.
+     Feriados de Chile: los de fecha fija sirven para cualquier año; los que cambian de fecha están cargados hasta 2027
+     (cada año hay que agregar los del siguiente en FERIADOS_VARIABLES). */
+  var FERIADOS_FIJOS = ["01-01", "05-01", "05-21", "07-16", "08-15", "09-18", "09-19", "11-01", "12-08", "12-25"];
+  var FERIADOS_VARIABLES = [
+    "2026-04-03", "2026-04-04", "2026-06-21", "2026-06-29", "2026-10-12", "2026-10-31",
+    "2027-03-26", "2027-03-27", "2027-06-21", "2027-06-28", "2027-10-11", "2027-10-31"
+  ];
+  function dos(n) { return (n < 10 ? "0" : "") + n; }
+  function habil(d) {
+    if (d.getDay() === 0 || d.getDay() === 6) return false;
+    var md = dos(d.getMonth() + 1) + "-" + dos(d.getDate());
+    return FERIADOS_FIJOS.indexOf(md) < 0 && FERIADOS_VARIABLES.indexOf(d.getFullYear() + "-" + md) < 0;
+  }
   function proximo(dia) {
     var hoy = new Date(); hoy.setHours(0, 0, 0, 0);
-    var calc = function (m, a) { var d = new Date(a, m, dia); while (d.getDay() === 0 || d.getDay() === 6) d.setDate(d.getDate() + 1); return d; };
+    var calc = function (m, a) { var d = new Date(a, m, dia); while (!habil(d)) d.setDate(d.getDate() + 1); return d; };
     var v = calc(hoy.getMonth(), hoy.getFullYear());
     if (v < hoy) v = calc(hoy.getMonth() + 1, hoy.getFullYear());
     var periodo = new Date(v.getFullYear(), v.getMonth() - 1, 1);

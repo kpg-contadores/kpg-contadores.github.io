@@ -49,10 +49,23 @@
       .catch(function () { clearTimeout(reloj); });
   }
 
-  /* Próximos vencimientos: F29 el 20 y Previred el 13; si cae en fin de semana pasa al lunes (feriados no incluidos) */
+  /* Próximos vencimientos: F29 el 20 y Previred el 13; si cae en fin de semana o feriado, pasa al día hábil siguiente.
+     Feriados de Chile: los de fecha fija sirven para cualquier año; los que cambian de fecha están cargados hasta 2027
+     (cada año hay que agregar los del siguiente en FERIADOS_VARIABLES). */
+  var FERIADOS_FIJOS = ["01-01", "05-01", "05-21", "07-16", "08-15", "09-18", "09-19", "11-01", "12-08", "12-25"];
+  var FERIADOS_VARIABLES = [
+    "2026-04-03", "2026-04-04", "2026-06-21", "2026-06-29", "2026-10-12", "2026-10-31",
+    "2027-03-26", "2027-03-27", "2027-06-21", "2027-06-28", "2027-10-11", "2027-10-31"
+  ];
+  function dos(n) { return (n < 10 ? "0" : "") + n; }
+  function habil(d) {
+    if (d.getDay() === 0 || d.getDay() === 6) return false;
+    var md = dos(d.getMonth() + 1) + "-" + dos(d.getDate());
+    return FERIADOS_FIJOS.indexOf(md) < 0 && FERIADOS_VARIABLES.indexOf(d.getFullYear() + "-" + md) < 0;
+  }
   function proximo(dia) {
     var hoy = new Date(); hoy.setHours(0, 0, 0, 0);
-    var calc = function (m, a) { var d = new Date(a, m, dia); while (d.getDay() === 0 || d.getDay() === 6) d.setDate(d.getDate() + 1); return d; };
+    var calc = function (m, a) { var d = new Date(a, m, dia); while (!habil(d)) d.setDate(d.getDate() + 1); return d; };
     var v = calc(hoy.getMonth(), hoy.getFullYear());
     if (v < hoy) v = calc(hoy.getMonth() + 1, hoy.getFullYear());
     var periodo = new Date(v.getFullYear(), v.getMonth() - 1, 1);
